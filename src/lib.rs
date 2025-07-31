@@ -19,8 +19,12 @@ impl Config {
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let _contents =
-        fs::read_to_string(config.file_path).expect("Should have been able to read the file");
+    let contents = fs::read_to_string(config.file_path)?;
+
+    for line in search(&config.query, &contents) {
+        println!("{line}")
+    }
+
     Ok(())
 }
 
